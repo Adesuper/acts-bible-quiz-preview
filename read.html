@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Read Acts 1–16 — NKJV</title>
+<link rel="stylesheet" href="css/style.css">
+  <!-- The Acts text, embedded. Lets the reader work with no server. -->
+  <script src="js/acts-data.js"></script>
+<style>
+  :root{
+    --hl-yellow:#fff3a3; --hl-yellow-edge:#e8c400;
+    --hl-pink:#ffd3e2;   --hl-pink-edge:#e0558a;
+    --hl-blue:#cfe4ff;   --hl-blue-edge:#3b82d6;
+    --hl-green:#cdf0d4;  --hl-green-edge:#3aa055;
+    --ink:#1d1d20; --muted:#6b6b72; --line:#e4e4e8;
+    --read-size:1.06rem;
+  }
+  .reader-wrap{max-width:820px;margin:0 auto;padding:0 16px 60px;}
+
+  /* Top bar */
+  .rbar{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line);
+        margin:0 -16px 14px;padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .rbar .grow{flex:1;min-width:8px;}
+  .rbar select,.rbar button{font-size:.9rem;padding:8px 10px;border:1px solid #d5d5db;border-radius:9px;background:#fff;color:var(--ink);cursor:pointer;}
+  .rbar select{max-width:46vw;}
+  .rbar button:hover{background:#f4f4f6;}
+  .rbar button.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .chip{font-size:.75rem;color:var(--muted);white-space:nowrap;}
+
+  /* Chapter nav */
+  .chapnav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
+  .chapnav a{display:inline-block;min-width:34px;text-align:center;padding:6px 7px;border:1px solid #d5d5db;
+             border-radius:8px;font-size:.85rem;text-decoration:none;color:var(--ink);background:#fff;}
+  .chapnav a.cur{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600;}
+
+  /* Reading area */
+  .chapter-head{margin:6px 0 4px;font-size:1.9rem;color:var(--ink);}
+  .chapter-sub{color:var(--muted);font-size:.9rem;margin:0 0 16px;}
+  .sec-head{font-size:.78rem;text-transform:uppercase;letter-spacing:.11em;color:#8a6d3b;
+            border-bottom:1px solid #e6e0d2;padding-bottom:5px;margin:26px 0 12px;font-weight:700;}
+  .verse{position:relative;padding:5px 8px 5px 40px;border-radius:7px;line-height:1.75;
+         font-size:var(--read-size);color:var(--ink);cursor:default;transition:background .12s;}
+  .verse .num{position:absolute;left:6px;top:6px;width:26px;text-align:right;font-size:.72rem;
+              font-weight:700;color:#a6a6ae;font-variant-numeric:tabular-nums;}
+  .marking .verse{cursor:pointer;}
+  .marking .verse:hover{background:#f4f4f6;}
+  .verse.hl-yellow{background:var(--hl-yellow);box-shadow:inset 3px 0 0 var(--hl-yellow-edge);}
+  .verse.hl-pink{background:var(--hl-pink);box-shadow:inset 3px 0 0 var(--hl-pink-edge);}
+  .verse.hl-blue{background:var(--hl-blue);box-shadow:inset 3px 0 0 var(--hl-blue-edge);}
+  .verse.hl-green{background:var(--hl-green);box-shadow:inset 3px 0 0 var(--hl-green-edge);}
+  .verse.inday{outline:2px dashed #b9b9bf;outline-offset:2px;}
+  .note{margin:4px 0 10px 40px;padding:8px 11px;background:#fffdf2;border-left:3px solid #e8c400;
+        border-radius:0 7px 7px 0;font-size:.87rem;color:#4a4a52;}
+  .note b{color:#8a6d3b;}
+
+  /* Colour palette */
+  .palette{position:sticky;bottom:0;z-index:40;background:#fff;border-top:1px solid var(--line);
+           margin:18px -16px 0;padding:10px 16px;display:none;flex-wrap:wrap;gap:8px;align-items:center;}
+  .palette.show{display:flex;}
+  .swatch{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:9px;
+          border:1px solid #d5d5db;background:#fff;font-size:.83rem;cursor:pointer;}
+  .swatch .dot{width:13px;height:13px;border-radius:3px;display:inline-block;}
+  .swatch.sel{border-color:var(--ink);box-shadow:0 0 0 2px rgba(0,0,0,.08);font-weight:600;}
+  .dot.yellow{background:var(--hl-yellow);border:1px solid var(--hl-yellow-edge);}
+  .dot.pink{background:var(--hl-pink);border:1px solid var(--hl-pink-edge);}
+  .dot.blue{background:var(--hl-blue);border:1px solid var(--hl-blue-edge);}
+  .dot.green{background:var(--hl-green);border:1px solid var(--hl-green-edge);}
+  .dot.erase{background:repeating-linear-gradient(45deg,#fff,#fff 3px,#ddd 3px,#ddd 6px);border:1px solid #bbb;}
+
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;background:var(--ink);color:#fff;
+         padding:9px 15px;border-radius:9px;font-size:.85rem;z-index:80;opacity:0;pointer-events:none;transition:opacity .18s;}
+  .toast.show{opacity:1;}
+  .legend{font-size:.8rem;color:var(--muted);margin:0 0 16px;line-height:1.8;}
+  .legend span{display:inline-block;margin-right:12px;white-space:nowrap;}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;vertical-align:-1px;margin-right:4px;}
+  .empty{color:var(--muted);padding:30px 0;text-align:center;}
+  @media print{
+    .rbar,.palette,.chapnav,.toast,.no-print{display:none !important;}
+    .verse{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="reader-wrap">
+
+  <div class="rbar">
+    <select id="chapterSel" title="Chapter"></select>
+    <select id="daySel" title="Jump to a study day"><option value="">Study day…</option></select>
+    <span class="grow"></span>
+    <button id="sizeBtn" title="Text size">A+</button>
+    <button id="markBtn" title="Turn highlighting on">Highlight</button>
+    <span class="chip" id="modeChip">Reading</span>
+  </div>
+
+  <div class="chapnav" id="chapNav"></div>
+
+  <h1 class="chapter-head" id="chapTitle">Acts</h1>
+  <p class="chapter-sub" id="chapSub">New King James Version</p>
+
+  <p class="legend" id="legend">
+    <span><i class="dot yellow" style="border:1px solid var(--hl-yellow-edge)"></i>Key point</span>
+    <span><i class="dot pink" style="border:1px solid var(--hl-pink-edge)"></i>Name</span>
+    <span><i class="dot blue" style="border:1px solid var(--hl-blue-edge)"></i>Place</span>
+    <span><i class="dot green" style="border:1px solid var(--hl-green-edge)"></i>Number / memory verse</span>
+  </p>
+
+  <div id="verses"><p class="empty">Loading…</p></div>
+
+  <div class="palette" id="palette">
+    <span class="chip">Tap a verse to mark it:</span>
+    <button class="swatch sel" data-color="yellow"><span class="dot yellow"></span>Key point</button>
+    <button class="swatch" data-color="pink"><span class="dot pink"></span>Name</button>
+    <button class="swatch" data-color="blue"><span class="dot blue"></span>Place</button>
+    <button class="swatch" data-color="green"><span class="dot green"></span>Number</button>
+    <button class="swatch" data-color=""><span class="dot erase"></span>Erase</button>
+    <span class="grow"></span>
+    <button id="noteBtn" title="Add a teaching note to the last verse you marked">Add note</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  var chapter = 1, dayFilter = null;
+  var verses = [], days = [];
+  var shared = {};                 // coach highlights from the server
+  var mine = {};                   // this device's own highlights
+  var marking = false, color = 'yellow', lastRef = null;
+  var coachPin = sessionStorage.getItem('bq_teacher_pin') || '';
+  var sizes = ['1.06rem', '1.22rem', '1.4rem'], sizeIdx = 0;
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function toast(msg) {
+    var t = $('toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('show'); }, 1900);
+  }
+
+  function loadMine() {
+    try { mine = JSON.parse(localStorage.getItem('bq_my_highlights') || '{}'); }
+    catch (e) { mine = {}; }
+  }
+  function saveMine() {
+    try { localStorage.setItem('bq_my_highlights', JSON.stringify(mine)); } catch (e) {}
+  }
+
+  // A verse shows the coach's mark if there is one, otherwise this device's own.
+  function markFor(ref) { return shared[ref] || mine[ref] || null; }
+
+  function buildChapterNav() {
+    var nav = $('chapNav'); nav.innerHTML = '';
+    for (var c = 1; c <= 16; c++) {
+      var a = document.createElement('a');
+      a.href = '#'; a.textContent = c;
+      if (c === chapter) a.className = 'cur';
+      (function (n) { a.onclick = function (e) { e.preventDefault(); go(n, null); }; })(c);
+      nav.appendChild(a);
+    }
+  }
+
+  function render() {
+    var box = $('verses');
+    if (!verses.length) { box.innerHTML = '<p class="empty">Nothing to show.</p>'; return; }
+    var html = '';
+    verses.forEach(function (v) {
+      if (v.heading) html += '<div class="sec-head">' + esc(v.heading) + '</div>';
+      var ref = chapter + ':' + v.v;
+      var m = markFor(ref);
+      var cls = 'verse' + (m && m.color ? ' hl-' + m.color : '');
+      if (dayFilter && v.v >= dayFilter.start && v.v <= dayFilter.end) cls += ' inday';
+      html += '<div class="' + cls + '" data-ref="' + ref + '">'
+            + '<span class="num">' + v.v + '</span>' + esc(v.text) + '</div>';
+      if (m && m.note) html += '<div class="note"><b>Coach:</b> ' + esc(m.note) + '</div>';
+    });
+    box.innerHTML = html;
+
+    Array.prototype.forEach.call(box.querySelectorAll('.verse'), function (el) {
+      el.onclick = function () { if (marking) applyMark(el.getAttribute('data-ref')); };
+    });
+
+    if (dayFilter) {
+      var first = box.querySelector('.inday');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function applyMark(ref) {
+    lastRef = ref;
+    if (coachPin) {
+      // Coach: save to the server so the whole team sees it
+      fetch('/api/acts/highlights', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: coachPin, ref: ref, color: color || null })
+      }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok) { toast(res.j.message || 'Could not save'); return; }
+          if (res.j.highlight) shared[ref] = res.j.highlight; else delete shared[ref];
+          render();
+        })
+        .catch(function () { toast('Offline — saved on this device only'); localMark(ref); });
+    } else {
+      localMark(ref);
+    }
+  }
+
+  function localMark(ref) {
+    if (!color) delete mine[ref];
+    else mine[ref] = { color: color };
+    saveMine(); render();
+  }
+
+  function addNote() {
+    if (!coachPin) { toast('Sign in as coach to add notes'); return; }
+    if (!lastRef) { toast('Tap a verse first'); return; }
+    var cur = (shared[lastRef] && shared[lastRef].note) || '';
+    var note = prompt('Teaching note for Acts ' + lastRef + ':', cur);
+    if (note === null) return;
+    fetch('/api/acts/highlights', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin: coachPin, ref: lastRef, color: (shared[lastRef] && shared[lastRef].color) || color, note: note })
+    }).then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j.highlight) shared[lastRef] = j.highlight; else delete shared[lastRef];
+        render(); toast(note ? 'Note saved' : 'Note removed');
+      })
+      .catch(function () { toast('Could not save note'); });
+  }
+
+  function setMarking(on) {
+    marking = on;
+    document.body.classList.toggle('marking', on);
+    $('palette').classList.toggle('show', on);
+    $('markBtn').classList.toggle('on', on);
+    $('markBtn').textContent = on ? 'Done' : 'Highlight';
+    $('modeChip').textContent = on
+      ? (coachPin ? 'Coach — everyone sees this' : 'Marking on this device')
+      : 'Reading';
+  }
+
+  function go(ch, day) {
+    chapter = ch; dayFilter = day;
+    buildChapterNav();
+    // The text never changes, so a local copy is shipped with the page. The
+    // API is still preferred when it answers -- it is the same data, and it
+    // keeps a single source of truth -- but the reader must not go blank just
+    // because the server is asleep or absent.
+    var offline = (typeof ACTS_CHAPTERS !== 'undefined') ? ACTS_CHAPTERS[String(ch)] : null;
+    Promise.all([
+      fetch('/api/acts/chapter/' + ch)
+        .then(function (r) { if (!r.ok) throw new Error('no chapter'); return r.json(); })
+        .catch(function () {
+          if (offline) return offline;
+          throw new Error('no text available');
+        }),
+      fetch('/api/acts/highlights?chapter=' + ch).then(function (r) { return r.json(); }).catch(function () { return {}; })
+    ]).then(function (out) {
+      var data = out[0];
+      shared = out[1] || {};
+      verses = data.verses || [];
+      days = data.days || [];
+      $('chapTitle').textContent = 'Acts ' + ch;
+      $('chapSub').textContent = verses.length + ' verses · New King James Version'
+        + (days.length ? ' · study days ' + days[0].day + '–' + days[days.length - 1].day : '');
+      $('chapterSel').value = String(ch);
+      fillDays();
+      if (day) $('daySel').value = String(day.day);
+      render();
+      try { history.replaceState(null, '', '?chapter=' + ch + (day ? '&day=' + day.day : '')); } catch (e) {}
+    }).catch(function () {
+      $('verses').innerHTML = '<p class="empty">Could not load Acts ' + ch + '. Try reloading the page.</p>';
+    });
+  }
+
+  function fillDays() {
+    var sel = $('daySel');
+    sel.innerHTML = '<option value="">Whole chapter</option>';
+    days.forEach(function (d) {
+      var o = document.createElement('option');
+      o.value = String(d.day);
+      o.textContent = 'Day ' + d.day + ' — ' + d.ref.replace('Acts ', '') + ' — ' + d.title;
+      sel.appendChild(o);
+    });
+  }
+
+  // ---- wiring ----
+  var csel = $('chapterSel');
+  for (var c = 1; c <= 16; c++) {
+    var o = document.createElement('option');
+    o.value = String(c); o.textContent = 'Acts ' + c;
+    csel.appendChild(o);
+  }
+  csel.onchange = function () { go(parseInt(csel.value, 10), null); };
+
+  $('daySel').onchange = function () {
+    var v = $('daySel').value;
+    if (!v) { dayFilter = null; render(); return; }
+    var d = days.filter(function (x) { return String(x.day) === v; })[0];
+    if (d) { dayFilter = d; render(); }
+  };
+
+  $('markBtn').onclick = function () { setMarking(!marking); };
+  $('noteBtn').onclick = addNote;
+
+  $('sizeBtn').onclick = function () {
+    sizeIdx = (sizeIdx + 1) % sizes.length;
+    document.documentElement.style.setProperty('--read-size', sizes[sizeIdx]);
+    $('sizeBtn').textContent = ['A+', 'A++', 'A'][sizeIdx];
+  };
+
+  Array.prototype.forEach.call(document.querySelectorAll('.swatch'), function (b) {
+    b.onclick = function () {
+      Array.prototype.forEach.call(document.querySelectorAll('.swatch'), function (x) { x.classList.remove('sel'); });
+      b.classList.add('sel');
+      color = b.getAttribute('data-color');
+    };
+  });
+
+  // Coach sign-in: ?coach=1 prompts for the teacher PIN once per browser session
+  function maybeCoach() {
+    var q = new URLSearchParams(location.search);
+    if (q.get('coach') === '1' && !coachPin) {
+      var p = prompt('Coach PIN (to share highlights with the team):');
+      if (p) {
+        fetch('/api/teacher/login', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin: p })
+        }).then(function (r) {
+          if (r.ok) { coachPin = p; sessionStorage.setItem('bq_teacher_pin', p); toast('Coach mode on'); setMarking(marking); }
+          else toast('That PIN was not right');
+        }).catch(function () { toast('Could not reach the server'); });
+      }
+    }
+  }
+
+  loadMine();
+  var q = new URLSearchParams(location.search);
+  var startCh = Math.min(16, Math.max(1, parseInt(q.get('chapter') || '1', 10) || 1));
+  maybeCoach();
+  go(startCh, null);
+  if (q.get('day')) {
+    var want = parseInt(q.get('day'), 10);
+    fetch('/api/acts/day/' + want)
+      .then(function (r) { if (!r.ok) throw new Error('no day'); return r.json(); })
+      .then(function (d) {
+        if (d && d.chapter) go(d.chapter, { day: d.day, start: d.verses[0].v, end: d.verses[d.verses.length - 1].v, ref: d.ref, title: d.title });
+      })
+      .catch(function () {
+        // Same jump, from the embedded day index.
+        var d = (typeof ACTS_DAYS !== 'undefined') ? ACTS_DAYS[String(want)] : null;
+        if (d) go(d.chapter, { day: d.day, start: d.start, end: d.end, ref: d.ref, title: d.title });
+      });
+  }
+})();
+</script>
+  <script src="js/nav.js"></script>
+</body>
+</html>
