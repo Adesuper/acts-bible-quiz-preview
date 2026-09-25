@@ -4,215 +4,240 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Acts 1–16 Bible Quiz — Adventurer Bible Game 2026–2027</title>
+  <meta name="description" content="Learn the book of Acts for the Adventurer Bible Game. Read Acts 1–16, practise 640 questions, sit the daily quiz, and play live with your team.">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/questions-data.js"></script>
 </head>
 <body>
-  <div class="container">
 
-    <div style="max-width:920px;margin:0 auto 4px;padding:14px 18px;background:hsl(45 95% 55% / .18);border:2px solid hsl(32 85% 52% / .35);border-radius:16px;">
-      <strong style="color:hsl(25 35% 18%);">Preview</strong>
-      <span style="color:hsl(25 15% 45%);">&nbsp;&mdash;&nbsp;static preview of the design and Practice mode, with all 475 Acts questions.
-      The Daily Assignment, live Saturday quiz, Bible reader and teacher dashboard need the game server, so they are not here.</span>
+    <div class="kbq-container" style="padding-top:14px;">
+      <div style="padding:14px 18px;background:hsl(45 95% 55% / .18);border:2px solid hsl(32 85% 52% / .35);border-radius:16px;">
+        <strong style="color:hsl(25 35% 18%);">Preview</strong>
+        <span style="color:hsl(25 15% 45%);">&nbsp;&mdash;&nbsp;the design and Practice mode, with all 640 Acts questions.
+        Read Acts, the Daily Quiz, the live Saturday quiz and the coach dashboard need the game server, so they are not here.</span>
+      </div>
     </div>
 
-    <!-- HERO SECTION -->
-    <div class="home-hero">
-      <div class="logo-icon">📖</div>
-      <h1>The Book of Acts</h1>
-      <p class="subtitle">Chapters 1&ndash;16 &middot; Adventurer Bible Game 2026&ndash;2027</p>
-      <p class="verse" id="dailyVerse"></p>
+  <!-- ============ HERO ============ -->
+  <section class="hero-wrap bg-gradient-hero">
+    <div class="hero-dots decorative-dots"></div>
+    <div class="kbq-container">
+      <div class="hero-inner">
+
+        <div class="hero-text animate-fade-in">
+          <h1>Welcome to <span class="text-gradient-warm">Acts Bible Quiz!</span></h1>
+          <p>Read the book of Acts, learn the stories, take fun quizzes, and play with your team! 🌟</p>
+          <div class="hero-actions">
+            <a class="kid-button" href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;"><span aria-hidden="true">📖</span> Start Reading</a>
+            <a class="kid-button kid-button-accent" href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;"><span aria-hidden="true">🎮</span> Join a Quiz</a>
+          </div>
+        </div>
+
+        <!-- An illustration in the same warm palette. Drawn inline so the page
+             carries no image files and still works with no server. -->
+        <div class="hero-art animate-scale-in">
+          <svg viewBox="0 0 640 400" role="img" aria-label="An open book with a flame above it, hills, and a small ship at sea" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="hsl(205 70% 82%)"/>
+                <stop offset="100%" stop-color="hsl(42 55% 94%)"/>
+              </linearGradient>
+              <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="hsl(45 95% 62%)"/>
+                <stop offset="100%" stop-color="hsl(18 85% 55%)"/>
+              </linearGradient>
+            </defs>
+
+            <rect width="640" height="400" fill="url(#sky)"/>
+            <circle cx="520" cy="86" r="42" fill="hsl(45 95% 70%)" opacity="0.75"/>
+
+            <!-- hills -->
+            <path d="M0 292 Q 120 232 250 288 T 640 268 L640 400 L0 400 Z" fill="hsl(150 32% 68%)"/>
+            <path d="M0 322 Q 170 272 330 318 T 640 306 L640 400 L0 400 Z" fill="hsl(150 30% 58%)"/>
+
+            <!-- sea, and a small ship for the journeys of Acts 13-16 -->
+            <path d="M0 348 Q 160 336 320 348 T 640 344 L640 400 L0 400 Z" fill="hsl(205 62% 66%)"/>
+            <g transform="translate(452 300)">
+              <path d="M-34 30 L34 30 L24 46 L-24 46 Z" fill="hsl(25 45% 38%)"/>
+              <rect x="-2" y="-26" width="4" height="56" rx="2" fill="hsl(25 45% 38%)"/>
+              <path d="M2 -24 L30 22 L2 22 Z" fill="hsl(42 45% 98%)"/>
+              <path d="M-2 -14 L-26 22 L-2 22 Z" fill="hsl(42 40% 92%)"/>
+            </g>
+
+            <!-- open book -->
+            <g transform="translate(196 236)">
+              <path d="M0 0 C -58 -22 -116 -16 -150 -2 L-150 76 C -116 62 -58 56 0 78 Z" fill="hsl(42 45% 98%)" stroke="hsl(35 30% 78%)" stroke-width="3"/>
+              <path d="M0 0 C 58 -22 116 -16 150 -2 L150 76 C 116 62 58 56 0 78 Z" fill="hsl(42 45% 98%)" stroke="hsl(35 30% 78%)" stroke-width="3"/>
+              <path d="M0 0 L0 78" stroke="hsl(32 85% 52%)" stroke-width="4" stroke-linecap="round"/>
+              <g stroke="hsl(35 25% 80%)" stroke-width="4" stroke-linecap="round">
+                <path d="M-122 12 H-30"/><path d="M-122 32 H-30"/><path d="M-122 52 H-46"/>
+                <path d="M30 12 H122"/><path d="M30 32 H122"/><path d="M46 52 H122"/>
+              </g>
+            </g>
+
+            <!-- a tongue of fire, Acts 2 -->
+            <g transform="translate(196 132)">
+              <path d="M0 -58 C 26 -28 30 -10 18 8 C 12 18 -12 18 -18 8 C -30 -10 -26 -28 0 -58 Z" fill="url(#flame)"/>
+              <path d="M0 -32 C 11 -16 13 -6 7 4 C 4 9 -4 9 -7 4 C -13 -6 -11 -16 0 -32 Z" fill="hsl(48 100% 86%)" opacity="0.9"/>
+            </g>
+
+            <!-- birds -->
+            <g stroke="hsl(25 25% 45%)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.55">
+              <path d="M92 92 q 12 -10 24 0"/><path d="M116 92 q 12 -10 24 0"/>
+              <path d="M330 68 q 10 -8 20 0"/><path d="M350 68 q 10 -8 20 0"/>
+            </g>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT WOULD YOU LIKE TO DO? ============ -->
+  <section class="kbq-container kbq-section">
+    <div style="text-align:center;">
+      <h2 class="section-title">What Would You Like to Do? 🎉</h2>
+      <p class="section-subtitle">Pick an adventure to get started!</p>
     </div>
 
-    <!-- DAILY ASSIGNMENT BANNER (adapts to whether a season has been scheduled) -->
-    <div class="card daily-banner" id="dailyBanner" style="margin-bottom: 20px; text-align: center;">
-      <div style="font-size: 2rem; margin-bottom: 8px;" id="bannerIcon">📋</div>
-      <h2 style="color: var(--primary); margin-bottom: 8px;" id="bannerTitle">Start Studying</h2>
-      <p style="color: var(--text-light); margin-bottom: 15px;" id="bannerText">
-        Read a chapter, then practise the questions on it. Go at your own pace.
-      </p>
-      <a href="practice.html" class="btn btn-accent btn-lg" id="bannerBtn">Practise Acts Questions</a>
-    </div>
-
-    <!-- STUDY PLAN -->
-    <div class="card" style="margin-bottom: 20px; text-align: center;">
-      <div style="font-size: 2rem; margin-bottom: 8px;">&#128220;</div>
-      <h2 style="color: var(--primary); margin-bottom: 8px;">The 74-Day Study Plan</h2>
-      <p style="color: var(--text-light); margin-bottom: 15px;">
-        Every verse of Acts 1&ndash;16, split into 74 short readings over 15 weeks.
-        Print the family packet to study away from a screen.
-      </p>
-      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="btn btn-accent btn-lg">Read Acts 1&ndash;16</a>
-      <a href="acts-family-packet.html" class="btn btn-lg" style="margin-top:10px;display:inline-block;background:#dfe6e9;color:#2d3436;">Printable Family Packet</a>
-    </div>
-
-    <!-- MODE SELECTION -->
-    <div class="mode-cards">
-      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="mode-card">
-        <div class="mode-icon">📋</div>
-        <h2>Daily Assignment</h2>
-        <p>Complete the 10 questions your teacher assigned. Your score is sent to the teacher!</p>
-        <span class="badge badge-daily">Do This Daily!</span>
+    <div class="feature-grid">
+      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="storybook-card feature-card group">
+        <div class="feature-icon group-wiggle" style="background:var(--secondary);">📖</div>
+        <h3>Read Acts</h3>
+        <p>All 16 chapters, with highlighting and notes from your coach.</p>
       </a>
 
-      <a href="practice.html" class="mode-card">
-        <div class="mode-icon">📝</div>
-        <h2>Free Practice</h2>
-        <p>Study at your own pace. Choose how many questions, pick difficulty, and master every detail!</p>
-        <span class="badge badge-daily">Unlimited</span>
+      <a href="practice.html" class="storybook-card feature-card group">
+        <div class="feature-icon group-wiggle" style="background:var(--accent);">🎮</div>
+        <h3>Practice</h3>
+        <p>640 questions, any chapter, as often as you like. No PIN needed!</p>
       </a>
 
-      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="mode-card">
-        <div class="mode-icon">🏆</div>
-        <h2>Live Quiz</h2>
-        <p>Teacher hosts, kids compete in real-time! Same questions, timer, live scoreboard!</p>
-        <span class="badge badge-friday">Multiplayer</span>
+      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="storybook-card feature-card group">
+        <div class="feature-icon group-wiggle" style="background:var(--primary);">🏆</div>
+        <h3>Join a Quiz</h3>
+        <p>Enter the room code and play live with your team on Saturday!</p>
       </a>
 
-      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="mode-card">
-        <div class="mode-icon">👩‍🏫</div>
-        <h2>Teacher Dashboard</h2>
-        <p>Create assignments, track student scores, and monitor who's preparing for the conference.</p>
-        <span class="badge" style="background: #e8daef; color: #6c3483;">Teachers Only</span>
+      <a href="leaderboard.html" class="storybook-card feature-card group">
+        <div class="feature-icon group-wiggle" style="background:var(--lavender);">⭐</div>
+        <h3>Leaderboard</h3>
+        <p>See who has scored highest this season and earn your place!</p>
       </a>
     </div>
+  </section>
 
-    <!-- QUICK STATS -->
-    <div class="card" id="quickStatsCard" style="display: none; margin-top: 20px;">
-      <h3 style="text-align: center; margin-bottom: 15px; color: var(--primary);">Your Journey</h3>
-      <div class="stats-grid" id="homeStats"></div>
+  <!-- ============ TODAY'S ASSIGNMENT ============ -->
+  <section class="kbq-container" style="padding-bottom:8px;">
+    <div class="storybook-card" style="max-width:42rem;margin:0 auto;text-align:center;">
+      <span style="font-size:2.25rem;display:block;margin-bottom:12px;" aria-hidden="true">📝</span>
+      <h3 id="bannerTitle" style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;margin-bottom:6px;">Practise at your own pace</h3>
+      <p id="bannerText" style="color:var(--text-light);margin-bottom:20px;">The season starts on Monday 26 October 2026. Until then, practise any chapter you like.</p>
+      <a id="bannerBtn" class="kid-button" href="practice.html">Start Practising</a>
     </div>
+  </section>
 
-    <!-- WOMEN OF THE BIBLE -->
-    <div style="margin-top: 30px;">
-      <h2 style="color: white; text-align: center; margin-bottom: 20px; font-size: 1.4rem;">Journey Through Acts</h2>
-      <div class="category-grid" id="categoryGrid"></div>
+  <!-- ============ THE SIXTEEN CHAPTERS ============ -->
+  <section class="kbq-container kbq-section">
+    <div style="text-align:center;">
+      <h2 class="section-title">The Book of Acts 📜</h2>
+      <p class="section-subtitle">Sixteen chapters, from the upper room to a midnight song in prison.</p>
     </div>
+    <div id="categoryGrid" class="feature-grid"></div>
+  </section>
 
-    <!-- FUN FACT -->
-    <div class="card" style="margin-top: 20px; text-align: center;">
-      <h3 style="color: var(--primary); margin-bottom: 10px;">Did You Know?</h3>
-      <p style="color: var(--text-light); line-height: 1.6;" id="funFact"></p>
+  <!-- ============ MEMORY VERSE OF THE DAY ============ -->
+  <section class="kbq-container" style="padding-bottom:64px;">
+    <div class="storybook-card verse-panel">
+      <span class="verse-star" aria-hidden="true">✨</span>
+      <p class="verse-label">Memory Verse of the Day</p>
+      <blockquote id="dailyVerse"></blockquote>
+      <cite id="dailyVerseRef"></cite>
     </div>
+  </section>
 
-    <div style="text-align: center; padding: 30px 0; color: rgba(255,255,255,0.7); font-size: 0.85rem;">
-      Acts 1&ndash;16 &mdash; Adventurer Bible Game 2026&ndash;2027<br>
-      All questions based on the New King James Version (NKJV)
+  <!-- ============ DID YOU KNOW? ============ -->
+  <section class="kbq-container" style="padding-bottom:64px;">
+    <div class="storybook-card" style="max-width:42rem;margin:0 auto;text-align:center;">
+      <span style="font-size:2rem;display:block;margin-bottom:10px;" aria-hidden="true">💡</span>
+      <p class="verse-label">Did You Know?</p>
+      <p id="funFact" style="color:var(--text-dark);line-height:1.6;font-size:1.05rem;"></p>
     </div>
-  </div>
+  </section>
 
   <script>
-    // Daily verses rotation
+    // ---- Memory verse of the day -------------------------------------------
+    // The fourteen weekly memory verses of the Acts season, rotating daily.
     const verses = [
-      "\"But you shall receive power when the Holy Spirit has come upon you; and you shall be witnesses to Me in Jerusalem, and in all Judea and Samaria, and to the end of the earth.\" — Acts 1:8",
-      "\"Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins.\" — Acts 2:38",
-      "\"Silver and gold I do not have, but what I do have I give you: In the name of Jesus Christ of Nazareth, rise up and walk.\" — Acts 3:6",
-      "\"Nor is there salvation in any other, for there is no other name under heaven given among men by which we must be saved.\" — Acts 4:12",
-      "\"For we cannot but speak the things which we have seen and heard.\" — Acts 4:20",
-      "\"We ought to obey God rather than men.\" — Acts 5:29",
-      "\"Look! I see the heavens opened and the Son of Man standing at the right hand of God!\" — Acts 7:56",
-      "\"He is a chosen vessel of Mine to bear My name before Gentiles, kings, and the children of Israel.\" — Acts 9:15",
-      "\"In truth I perceive that God shows no partiality.\" — Acts 10:34",
-      "\"And the disciples were first called Christians in Antioch.\" — Acts 11:26",
-      "\"Peter was therefore kept in prison, but constant prayer was offered to God for him by the church.\" — Acts 12:5",
-      "\"We must through many tribulations enter the kingdom of God.\" — Acts 14:22",
-      "\"But we believe that through the grace of the Lord Jesus Christ we shall be saved.\" — Acts 15:11",
-      "\"Believe on the Lord Jesus Christ, and you will be saved, you and your household.\" — Acts 16:31"
+      ["But you shall receive power when the Holy Spirit has come upon you; and you shall be witnesses to Me in Jerusalem, and in all Judea and Samaria, and to the end of the earth.", "Acts 1:8"],
+      ["Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins.", "Acts 2:38"],
+      ["Silver and gold I do not have, but what I do have I give you: In the name of Jesus Christ of Nazareth, rise up and walk.", "Acts 3:6"],
+      ["Nor is there salvation in any other, for there is no other name under heaven given among men by which we must be saved.", "Acts 4:12"],
+      ["For we cannot but speak the things which we have seen and heard.", "Acts 4:20"],
+      ["We ought to obey God rather than men.", "Acts 5:29"],
+      ["Look! I see the heavens opened and the Son of Man standing at the right hand of God!", "Acts 7:56"],
+      ["He is a chosen vessel of Mine to bear My name before Gentiles, kings, and the children of Israel.", "Acts 9:15"],
+      ["In truth I perceive that God shows no partiality.", "Acts 10:34"],
+      ["And the disciples were first called Christians in Antioch.", "Acts 11:26"],
+      ["Peter was therefore kept in prison, but constant prayer was offered to God for him by the church.", "Acts 12:5"],
+      ["We must through many tribulations enter the kingdom of God.", "Acts 14:22"],
+      ["But we believe that through the grace of the Lord Jesus Christ we shall be saved.", "Acts 15:11"],
+      ["Believe on the Lord Jesus Christ, and you will be saved, you and your household.", "Acts 16:31"]
     ];
     const dayIndex = Math.floor(Date.now() / 86400000) % verses.length;
-    document.getElementById('dailyVerse').textContent = verses[dayIndex];
+    document.getElementById('dailyVerse').textContent = '“' + verses[dayIndex][0] + '”';
+    document.getElementById('dailyVerseRef').textContent = '— ' + verses[dayIndex][1];
 
-    // Fun facts
+    // ---- Did you know ------------------------------------------------------
     const facts = [
-      "Acts is the second half of one book — Luke wrote his Gospel and Acts to the same man, Theophilus.",
-      "The word \"Christian\" appears for the first time in Acts 11:26, and it was coined in Antioch, not Jerusalem.",
-      "Stephen’s speech in Acts 7 is the longest speech in the whole book — and the young man watching the coats was Saul.",
-      "The field Judas bought was called Akel Dama, which means \"Field of Blood\" (Acts 1:19).",
-      "About 3,000 people believed on the day of Pentecost — and by Acts 4:4 the number of men was about 5,000.",
-      "Dorcas (also called Tabitha) is the only woman in the Bible recorded as being raised from the dead (Acts 9:36–42).",
-      "The street where Saul stayed in Damascus was called Straight — and you can still walk it today (Acts 9:11).",
-      "Rhoda was so excited to hear Peter’s voice that she ran to tell everyone and left him knocking outside the gate (Acts 12:13–16).",
-      "Saul is called Paul for the first time in Acts 13:9 — not at his conversion, as many people assume.",
-      "At Lystra the crowd thought Barnabas was Zeus and Paul was Hermes, because Paul was the main speaker (Acts 14:12).",
-      "Lydia, a seller of purple from Thyatira, was the first recorded convert in Europe (Acts 16:14).",
-      "Paul and Silas were singing hymns at midnight when the earthquake opened the prison doors (Acts 16:25–26)."
+      'Acts is the second half of one book — Luke wrote his Gospel and Acts to the same man, Theophilus.',
+      'The word "Christian" appears for the first time in Acts 11:26, and it was coined in Antioch, not Jerusalem.',
+      'Stephen’s speech in Acts 7 is the longest speech in the whole book — and the young man watching the coats was Saul.',
+      'The field Judas bought was called Akel Dama, which means "Field of Blood" (Acts 1:19).',
+      'About 3,000 people believed on the day of Pentecost — and by Acts 4:4 the number of men was about 5,000.',
+      'Dorcas (also called Tabitha) is the only woman in the Bible recorded as being raised from the dead (Acts 9:36–42).',
+      'The street where Saul stayed in Damascus was called Straight — and you can still walk it today (Acts 9:11).',
+      'Rhoda was so excited to hear Peter’s voice that she ran to tell everyone and left him knocking outside the gate (Acts 12:13–16).',
+      'Saul is called Paul for the first time in Acts 13:9 — not at his conversion, as many people assume.',
+      'At Lystra the crowd thought Barnabas was Zeus and Paul was Hermes, because Paul was the main speaker (Acts 14:12).',
+      'Lydia, a seller of purple from Thyatira, was the first recorded convert in Europe (Acts 16:14).',
+      'Paul and Silas were singing hymns at midnight when the earthquake opened the prison doors (Acts 16:25–26).'
     ];
-    const factIndex = Math.floor(Date.now() / 86400000) % facts.length;
-    document.getElementById('funFact').textContent = facts[factIndex];
+    document.getElementById('funFact').textContent = facts[Math.floor(Date.now() / 86400000) % facts.length];
 
-    // Load categories from embedded data (works on GitHub Pages — no server needed)
-    // If the coach has scheduled the season, show today's assignment.
-    // If nothing is scheduled yet, point at self-paced practice instead, so the
-    // page never promises an assignment that isn't there.
+    // ---- Today's assignment, when the season is running ---------------------
+    // Falls back to the practice wording above, so the page never promises an
+    // assignment that is not there, and still reads correctly with no server.
     fetch('/api/daily/available')
       .then(function (r) { return r.json(); })
       .then(function (list) {
         var acts = (list || []).filter(function (a) {
           return a.kind === 'study' || a.kind === 'weekly' || a.kind === 'revision';
         });
-        if (!acts.length) return;                    // keep the practice wording
+        if (!acts.length) return;
         var next = acts[0];
         document.getElementById('bannerTitle').textContent = "Today's Assignment";
-        document.getElementById('bannerText').textContent =
-          next.label + ' — ' + next.questionCount + ' questions.';
+        document.getElementById('bannerText').textContent = next.label + ' — ' + next.questionCount + ' questions.';
         var btn = document.getElementById('bannerBtn');
         btn.textContent = 'Start Daily Assignment';
         btn.setAttribute('href', 'daily.html');
       })
       .catch(function () { /* offline: the practice wording still makes sense */ });
 
-    // This season is Acts 1-16. The bank holds only Acts now -- last season's
-    // Women of the Bible questions were moved to archive/ so the two cannot
-    // mix -- but the filter is kept so a future season can be added without
-    // the home grid silently showing both at once.
+    // ---- The sixteen chapters ----------------------------------------------
+    // The filter is kept so a future season can be added without this grid
+    // silently showing two books at once.
     const categories = QUIZ_CATEGORIES
       .filter(cat => cat.id.startsWith('acts'))
-      .map(cat => {
-        const count = QUIZ_QUESTIONS.filter(q => q.category === cat.id).length;
-        return { ...cat, questionCount: count };
-      });
-    const grid = document.getElementById('categoryGrid');
-    categories.forEach(cat => {
-      const card = document.createElement('a');
-      card.href = `practice.html?category=${cat.id}`;
-      card.className = 'category-card';
-      card.style.borderColor = cat.color;
-      card.innerHTML = `
-        <div class="cat-icon">${cat.icon}</div>
-        <h3>${cat.name} <span style="font-size:0.75rem;color:var(--text-light);">(${cat.questionCount})</span></h3>
-        <div class="cat-ref">${cat.reference}</div>
-        <div class="cat-desc">${cat.description}</div>
-      `;
-      grid.appendChild(card);
-    });
+      .map(cat => ({ ...cat, questionCount: QUIZ_QUESTIONS.filter(q => q.category === cat.id).length }));
 
-    // Show progress stats if available
-    try {
-      const progress = JSON.parse(localStorage.getItem('bible_quiz_progress') || '{}');
-      if (progress.totalAnswered && progress.totalAnswered > 0) {
-        document.getElementById('quickStatsCard').style.display = 'block';
-        const accuracy = Math.round((progress.totalCorrect / progress.totalAnswered) * 100);
-        const seen = progress.seen ? Object.keys(progress.seen).length : 0;
-        const mastered = progress.seen
-          ? Object.values(progress.seen).filter(s => s.correct >= 2).length
-          : 0;
-
-        document.getElementById('homeStats').innerHTML = `
-          <div class="stat-item">
-            <div class="stat-value">${progress.totalSessions || 0}</div>
-            <div class="stat-label">Sessions</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">${accuracy}%</div>
-            <div class="stat-label">Accuracy</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">${seen}</div>
-            <div class="stat-label">Questions Seen</div>
-          </div>
-        `;
-      }
-    } catch (e) {}
+    document.getElementById('categoryGrid').innerHTML = categories.map(cat => `
+      <a href="practice.html?category=${cat.id}" class="storybook-card feature-card group">
+        <div class="feature-icon group-wiggle" style="background:${cat.color};">${cat.icon}</div>
+        <h3>${cat.name}</h3>
+        <p>${cat.description}</p>
+        <p style="margin-top:8px;font-weight:700;color:var(--primary);">${cat.questionCount} questions</p>
+      </a>`).join('');
   </script>
   <script src="js/nav.js"></script>
 </body>

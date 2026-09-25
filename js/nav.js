@@ -9,9 +9,15 @@
 // (the printable packet, the teacher dashboard) are simply left out.
 (function () {
   const NAV_ITEMS = [
-    { href: 'index.html',      label: 'Home',      icon: '🏠' },
-    { href: 'practice.html',   label: 'Practice',  icon: '🎮' }
+    { href: 'index.html',       label: 'Home',        icon: '\u{1F3E0}' },
+    { href: 'practice.html',    label: 'Practice',    icon: '\u{1F3AE}' },
+    { href: 'team-play.html',   label: 'Live Quiz',   icon: '\u{1F3C6}' },
+    { href: 'leaderboard.html', label: 'Leaderboard', icon: '\u2B50' }
   ];
+
+  // The coach link sits apart from the children's menu, as the sibling app
+  // keeps its Moderator link separate from the main nav items.
+  const COACH_ITEM = { href: 'teacher.html', label: 'Coach', icon: '\u{1F511}' };
 
   const page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
 
@@ -19,6 +25,13 @@
     const active = page === item.href.toLowerCase();
     return `<a class="nav-link${active ? ' active' : ''}" href="${item.href}"${active ? ' aria-current="page"' : ''}>
       <span class="nav-ico" aria-hidden="true">${item.icon}</span><span>${item.label}</span>
+    </a>`;
+  };
+
+  const coachLink = () => {
+    const active = page === COACH_ITEM.href.toLowerCase();
+    return `<a class="nav-link nav-link-coach${active ? ' active' : ''}" href="${COACH_ITEM.href}"${active ? ' aria-current="page"' : ''}>
+      <span class="nav-ico" aria-hidden="true">${COACH_ITEM.icon}</span><span>${COACH_ITEM.label}</span>
     </a>`;
   };
 

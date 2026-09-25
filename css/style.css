@@ -242,30 +242,32 @@ body {
 
 .page-header h1 {
   font-family: var(--font-display);
-  font-size: 2.6rem;
-  font-weight: 900;
+  font-size: 2rem;
+  font-weight: 800;
   text-shadow: none;
   margin-bottom: 8px;
-  letter-spacing: -0.5px;
 }
 
+@media (min-width: 768px) { .page-header h1 { font-size: 2.35rem; } }
+
 .page-header p {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  color: var(--text-light);
+  font-weight: 400;
 }
 
 /* ============ CARD ============ */
+/* Same shape as .storybook-card in the sibling app, so pages that already use
+   .card inherit that look without each one being rewritten. */
 .card {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: var(--radius-lg);
-  padding: 30px;
+  background: var(--bg-warm);
+  border-radius: var(--radius-md);
+  padding: 24px;
   box-shadow: var(--card-shadow);
   margin-bottom: 20px;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid var(--border);
 }
 
 .card:hover {
@@ -2453,3 +2455,226 @@ body {
   .site-nav-inner { position: relative; flex-wrap: wrap; }
   .nav-link { justify-content: flex-start; padding: 12px 14px; }
 }
+
+/* ============================================================
+   KIDS BIBLE QUIZ COMPONENT CLASSES
+   Ported from that app's src/index.css and tailwind.config.ts so the two
+   sites are the same design, not merely the same colours. Tailwind's @apply
+   is expanded by hand here because these pages are plain CSS.
+   ============================================================ */
+:root { --warm-glow: hsl(40 90% 70%); }
+
+/* --- storybook-card: the card used for every panel on his pages --- */
+.storybook-card {
+  background: var(--bg-warm);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  padding: 24px;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.storybook-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* --- kid-button: chunky button with a solid "lip" underneath --- */
+.kid-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  padding: 16px 32px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 0 hsl(32 85% 52% / 0.4);
+  background: var(--primary);
+  color: #fff;
+}
+
+.kid-button:hover { transform: translateY(-2px); box-shadow: 0 6px 0 hsl(32 85% 52% / 0.4); }
+.kid-button:active { transform: translateY(1px); box-shadow: 0 2px 0 hsl(32 85% 52% / 0.4); }
+
+.kid-button-accent {
+  background: var(--accent);
+  color: hsl(205 55% 15%);
+  box-shadow: 0 4px 0 hsl(205 65% 45% / 0.4);
+}
+.kid-button-accent:hover { box-shadow: 0 6px 0 hsl(205 65% 45% / 0.4); }
+.kid-button-accent:active { box-shadow: 0 2px 0 hsl(205 65% 45% / 0.4); }
+
+/* --- section headings --- */
+.section-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.section-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  color: var(--text-light);
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) { .section-title { font-size: 2.35rem; } }
+
+/* --- hero ground and its dot texture --- */
+.bg-gradient-hero {
+  background: linear-gradient(180deg, hsl(42 50% 94%), hsl(42 50% 96%) 60%, hsl(42 50% 96%));
+}
+
+.decorative-dots {
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.text-gradient-warm {
+  background: linear-gradient(135deg, var(--primary), var(--warm-glow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* --- animations, matching his keyframes --- */
+@keyframes kbq-fade-in { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes kbq-scale-in { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes kbq-wiggle { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes kbq-float-up { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes kbq-bounce-in { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 70% { transform: scale(0.95); } 100% { transform: scale(1); opacity: 1; } }
+
+.animate-fade-in { animation: kbq-fade-in 0.4s ease both; }
+.animate-scale-in { animation: kbq-scale-in 0.4s ease both; }
+.animate-float-up { animation: kbq-float-up 3s ease-in-out infinite; }
+.animate-bounce-in { animation: kbq-bounce-in 0.5s ease both; }
+.group:hover .group-wiggle { animation: kbq-wiggle 0.4s ease-in-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in, .animate-scale-in, .animate-float-up,
+  .animate-bounce-in, .group:hover .group-wiggle { animation: none; }
+  .storybook-card:hover, .kid-button:hover { transform: none; }
+}
+
+/* --- page shell --- */
+.kbq-container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.kbq-section { padding: 64px 0; }
+
+/* --- feature card grid --- */
+.feature-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 640px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .feature-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.feature-card { text-align: center; text-decoration: none; display: block; color: inherit; }
+
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 1.9rem;
+}
+
+.feature-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.feature-card p { font-family: var(--font-body); color: var(--text-light); font-size: 0.9rem; }
+
+/* --- hero layout --- */
+.hero-wrap { position: relative; overflow: hidden; }
+.hero-dots { position: absolute; inset: 0; opacity: 0.3; pointer-events: none; }
+.hero-inner { position: relative; display: flex; flex-direction: column; align-items: center; gap: 32px; padding: 48px 0; }
+.hero-text { flex: 1; text-align: center; }
+
+.hero-text h1 {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.hero-text > p {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin: 0 auto 32px;
+  max-width: 34rem;
+}
+
+.hero-actions { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+.hero-art { flex: 1; max-width: 34rem; width: 100%; }
+.hero-art svg { width: 100%; height: auto; border-radius: var(--radius-lg); box-shadow: var(--card-shadow-hover); border: 4px solid var(--bg-warm); display: block; }
+
+@media (min-width: 640px) { .hero-actions { flex-direction: row; } }
+
+@media (min-width: 1024px) {
+  .hero-inner { flex-direction: row; gap: 48px; padding: 80px 0; }
+  .hero-text { text-align: left; }
+  .hero-text > p { margin-left: 0; }
+  .hero-actions { justify-content: flex-start; }
+  .hero-text h1 { font-size: 3.4rem; }
+}
+
+/* --- memory verse panel --- */
+.verse-panel {
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+  background: hsl(32 85% 52% / 0.05);
+  border-color: hsl(32 85% 52% / 0.2);
+}
+
+.verse-panel .verse-star { font-size: 2.25rem; display: block; margin-bottom: 16px; }
+
+.verse-panel .verse-label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.verse-panel blockquote {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  font-style: italic;
+  line-height: 1.55;
+  margin: 0 0 12px;
+}
+
+.verse-panel cite {
+  font-family: var(--font-display);
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1.05rem;
+  font-style: normal;
+}
+
+@media (min-width: 768px) { .verse-panel blockquote { font-size: 1.4rem; } }
+
+/* The coach link is set apart from the children's menu items. */
+.nav-link-coach { margin-left: 8px; border: 2px solid var(--border); }
+.nav-link-coach.active { border-color: transparent; }
+@media (max-width: 820px) { .nav-link-coach { margin-left: 0; margin-top: 6px; } }

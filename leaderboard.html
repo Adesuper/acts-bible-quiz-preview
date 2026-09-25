@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard — Acts 1–16 Bible Quiz</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <section class="kbq-container kbq-section">
+    <div style="text-align:center;">
+      <span style="font-size:3rem;display:block;margin-bottom:8px;" aria-hidden="true">🏆</span>
+      <h1 class="section-title">Leaderboard</h1>
+      <p class="section-subtitle">See who has scored the highest this season!</p>
+    </div>
+
+    <!-- Top three, shown as a podium once there are enough scores. -->
+    <div id="podium" class="feature-grid" style="grid-template-columns:1fr;max-width:52rem;margin:0 auto 32px;"></div>
+
+    <div id="rankings" style="max-width:42rem;margin:0 auto;">
+      <p style="color:var(--text-light);text-align:center;">Loading…</p>
+    </div>
+
+    <div id="emptyState" class="storybook-card" style="max-width:42rem;margin:0 auto;text-align:center;display:none;">
+      <span style="font-size:2.5rem;display:block;margin-bottom:12px;" aria-hidden="true">🌟</span>
+      <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:8px;">No scores yet!</h3>
+      <p style="color:var(--text-light);margin-bottom:20px;">Be the first on the board — sit a daily assignment or join a live quiz.</p>
+      <a class="kid-button" href="daily.html">Start a Daily Quiz</a>
+    </div>
+  </section>
+
+  <script>
+    const rankEmoji = ['🥇', '🥈', '🥉'];
+    // The first three rows get a tint, matching the sibling app's rankClasses.
+    const rankTint = [
+      'background:hsl(45 95% 55% / 0.2); border-color:hsl(45 95% 55% / 0.4);',
+      'background:var(--bg-light); border-color:var(--border);',
+      'background:hsl(15 80% 80% / 0.2); border-color:hsl(15 80% 80% / 0.4);'
+    ];
+
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+    }
+
+    async function loadLeaderboard() {
+      const rankings = document.getElementById('rankings');
+      let list;
+      try {
+        const res = await fetch('/api/daily/leaderboard');
+        if (!res.ok) throw new Error('Could not load the leaderboard.');
+        list = await res.json();
+      } catch (e) {
+        rankings.innerHTML = '<div class="storybook-card" style="text-align:center;">'
+          + '<p style="color:var(--text-light);">The leaderboard needs the game server, so it is not available here.</p></div>';
+        return;
+      }
+
+      // Only children actually on the roster belong on the board -- test names
+      // and one-off guests would otherwise sit among them.
+      let roster = null;
+      try {
+        const r = await fetch('/api/students');
+        if (r.ok) roster = (await r.json()).students;
+      } catch (e) { /* fall through: show everyone */ }
+      if (Array.isArray(roster) && roster.length) {
+        const allowed = new Set(roster.map(n => String(n).toLowerCase()));
+        list = list.filter(s => allowed.has(String(s.name).toLowerCase()));
+      }
+
+      list = (list || []).filter(s => s.totalScore > 0);
+
+      if (!list.length) {
+        rankings.innerHTML = '';
+        document.getElementById('emptyState').style.display = 'block';
+        return;
+      }
+
+      // Podium for the top three
+      document.getElementById('podium').innerHTML = list.slice(0, 3).map((s, i) => `
+        <div class="storybook-card animate-fade-in" style="text-align:center;${rankTint[i]};animation-delay:${i * 80}ms;">
+          <span style="font-size:2.6rem;display:block;" aria-hidden="true">${rankEmoji[i]}</span>
+          <h3 style="font-family:var(--font-display);font-size:1.25rem;font-weight:800;margin:6px 0 2px;">${esc(s.name)}</h3>
+          <p style="color:var(--text-light);font-size:0.85rem;">${s.daysCompleted} set${s.daysCompleted === 1 ? '' : 's'} &middot; ${s.accuracy}% accuracy</p>
+          <p style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--primary);margin-top:8px;">${s.totalScore}</p>
+        </div>`).join('');
+      if (list.length >= 3) {
+        document.getElementById('podium').style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
+      }
+
+      rankings.innerHTML = list.map((s, i) => `
+        <div class="storybook-card animate-fade-in" style="padding:16px;display:flex;align-items:center;gap:16px;margin-bottom:12px;${i < 3 ? rankTint[i] : ''};animation-delay:${i * 60}ms;">
+          <span style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;width:44px;text-align:center;">${i < 3 ? rankEmoji[i] : '#' + (i + 1)}</span>
+          <div style="flex:1;min-width:0;">
+            <p style="font-family:var(--font-display);font-weight:800;color:var(--text-dark);">${esc(s.name)}</p>
+            <p style="font-size:0.85rem;color:var(--text-light);">${s.daysCompleted} set${s.daysCompleted === 1 ? '' : 's'} &middot; ${s.accuracy}% correct</p>
+          </div>
+          <span style="font-family:var(--font-display);font-size:1.25rem;font-weight:800;color:var(--primary);">${s.totalScore}</span>
+        </div>`).join('');
+    }
+
+    loadLeaderboard();
+  </script>
+  <script src="js/nav.js"></script>
+</body>
+</html>
