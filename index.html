@@ -12,8 +12,8 @@
 
     <div style="max-width:920px;margin:0 auto 4px;padding:14px 18px;background:hsl(45 95% 55% / .18);border:2px solid hsl(32 85% 52% / .35);border-radius:16px;">
       <strong style="color:hsl(25 35% 18%);">Preview</strong>
-      <span style="color:hsl(25 15% 45%);">&nbsp;&mdash;&nbsp;this is a static preview of the design and Practice mode, with all 475 Acts questions.
-      The Daily Assignment, the live Saturday quiz, the Bible reader and the teacher dashboard need the game server, so they are not here.</span>
+      <span style="color:hsl(25 15% 45%);">&nbsp;&mdash;&nbsp;static preview of the design and Practice mode, with all 475 Acts questions.
+      The Daily Assignment, live Saturday quiz, Bible reader and teacher dashboard need the game server, so they are not here.</span>
     </div>
 
     <!-- HERO SECTION -->
@@ -104,31 +104,38 @@
   <script>
     // Daily verses rotation
     const verses = [
-      '"She opens her mouth with wisdom, and on her tongue is the law of kindness." — Proverbs 31:26',
-      '"Charm is deceitful and beauty is passing, but a woman who fears the Lord, she shall be praised." — Proverbs 31:30',
-      '"Who can find a virtuous wife? For her worth is far above rubies." — Proverbs 31:10',
-      '"Strength and honor are her clothing; she shall rejoice in time to come." — Proverbs 31:25',
-      '"She watches over the ways of her household, and does not eat the bread of idleness." — Proverbs 31:27',
-      '"For such a time as this." — Esther 4:14',
-      '"Wherever you go, I will go; wherever you lodge, I will lodge." — Ruth 1:16',
-      '"My soul magnifies the Lord, and my spirit has rejoiced in God my Savior." — Luke 1:46-47',
-      '"My heart rejoices in the Lord; my horn is exalted in the Lord." — 1 Samuel 2:1'
+      "\"But you shall receive power when the Holy Spirit has come upon you; and you shall be witnesses to Me in Jerusalem, and in all Judea and Samaria, and to the end of the earth.\" — Acts 1:8",
+      "\"Repent, and let every one of you be baptized in the name of Jesus Christ for the remission of sins.\" — Acts 2:38",
+      "\"Silver and gold I do not have, but what I do have I give you: In the name of Jesus Christ of Nazareth, rise up and walk.\" — Acts 3:6",
+      "\"Nor is there salvation in any other, for there is no other name under heaven given among men by which we must be saved.\" — Acts 4:12",
+      "\"For we cannot but speak the things which we have seen and heard.\" — Acts 4:20",
+      "\"We ought to obey God rather than men.\" — Acts 5:29",
+      "\"Look! I see the heavens opened and the Son of Man standing at the right hand of God!\" — Acts 7:56",
+      "\"He is a chosen vessel of Mine to bear My name before Gentiles, kings, and the children of Israel.\" — Acts 9:15",
+      "\"In truth I perceive that God shows no partiality.\" — Acts 10:34",
+      "\"And the disciples were first called Christians in Antioch.\" — Acts 11:26",
+      "\"Peter was therefore kept in prison, but constant prayer was offered to God for him by the church.\" — Acts 12:5",
+      "\"We must through many tribulations enter the kingdom of God.\" — Acts 14:22",
+      "\"But we believe that through the grace of the Lord Jesus Christ we shall be saved.\" — Acts 15:11",
+      "\"Believe on the Lord Jesus Christ, and you will be saved, you and your household.\" — Acts 16:31"
     ];
     const dayIndex = Math.floor(Date.now() / 86400000) % verses.length;
     document.getElementById('dailyVerse').textContent = verses[dayIndex];
 
     // Fun facts
     const facts = [
-      'The book of Esther is one of only two books in the Bible named after a woman (Ruth is the other)!',
-      'Ruth was a Moabite — a foreigner — yet she became the great-grandmother of King David and an ancestor of Jesus!',
-      'Hannah\'s prayer in 1 Samuel 2 is so similar to Mary\'s Magnificat in Luke 1 that scholars believe Mary was inspired by Hannah!',
-      'Deborah is the only woman in the Bible who served as both a judge AND a prophetess of Israel!',
-      'Abigail is one of only a few women in the Bible described as both wise AND beautiful!',
-      'Elizabeth and Mary were relatives, and their miraculous pregnancies overlapped by about 3 months!',
-      'The name "Esther" may come from the Persian word for "star," while her Hebrew name Hadassah means "myrtle tree."',
-      'The festival of Purim, celebrated to this day, comes from the story of Esther — "Pur" means "lot" in Persian.',
-      'Jael used a tent peg to defeat Sisera — as a nomadic woman, she was expert at driving tent pegs!',
-      'Obed, Ruth\'s son, means "servant" — and his grandson David became the greatest king of Israel!'
+      "Acts is the second half of one book — Luke wrote his Gospel and Acts to the same man, Theophilus.",
+      "The word \"Christian\" appears for the first time in Acts 11:26, and it was coined in Antioch, not Jerusalem.",
+      "Stephen’s speech in Acts 7 is the longest speech in the whole book — and the young man watching the coats was Saul.",
+      "The field Judas bought was called Akel Dama, which means \"Field of Blood\" (Acts 1:19).",
+      "About 3,000 people believed on the day of Pentecost — and by Acts 4:4 the number of men was about 5,000.",
+      "Dorcas (also called Tabitha) is the only woman in the Bible recorded as being raised from the dead (Acts 9:36–42).",
+      "The street where Saul stayed in Damascus was called Straight — and you can still walk it today (Acts 9:11).",
+      "Rhoda was so excited to hear Peter’s voice that she ran to tell everyone and left him knocking outside the gate (Acts 12:13–16).",
+      "Saul is called Paul for the first time in Acts 13:9 — not at his conversion, as many people assume.",
+      "At Lystra the crowd thought Barnabas was Zeus and Paul was Hermes, because Paul was the main speaker (Acts 14:12).",
+      "Lydia, a seller of purple from Thyatira, was the first recorded convert in Europe (Acts 16:14).",
+      "Paul and Silas were singing hymns at midnight when the earthquake opened the prison doors (Acts 16:25–26)."
     ];
     const factIndex = Math.floor(Date.now() / 86400000) % facts.length;
     document.getElementById('funFact').textContent = facts[factIndex];
@@ -207,5 +214,6 @@
       }
     } catch (e) {}
   </script>
+  <script src="js/nav.js"></script>
 </body>
 </html>

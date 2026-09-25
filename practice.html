@@ -19,7 +19,8 @@
       </div>
       <div class="card name-input-card" style="max-width:450px; margin:0 auto; text-align:center;">
         <div style="font-size:3rem; margin-bottom:15px;">📝</div>
-        <h3 style="margin-bottom:20px;">Who are you?</h3>
+        <h3 style="margin-bottom:6px;">Who are you?</h3>
+        <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:18px;">Practice is open to everyone — no PIN needed.</p>
         <div class="form-group">
           <select id="practiceNameSelect" style="width:100%; padding:14px; border:2px solid #e0e0e0; border-radius:12px; font-size:1.1rem; text-align:center;" onchange="handlePracticeNameSelect()">
             <!-- Names are filled in from /api/students on load, so the roster
@@ -32,10 +33,8 @@
         <div class="form-group" id="practiceOtherGroup" style="display:none;">
           <input type="text" id="practiceOtherInput" placeholder="Type your name..." maxlength="30" style="text-align:center; font-size:1.1rem; width:100%; padding:14px; border:2px solid #e0e0e0; border-radius:12px;">
         </div>
-        <div class="form-group" id="practicePinGroup" style="display:none;">
-          <label style="font-weight:600; margin-bottom:8px; display:block;">Enter your PIN</label>
-          <input type="password" id="practicePinInput" placeholder="4-digit PIN..." maxlength="10" style="text-align:center; font-size:1.5rem; letter-spacing:8px; width:100%; padding:14px; border:2px solid #e0e0e0; border-radius:12px;">
-        </div>
+        <!-- Practice is open to everyone: no PIN. Only the daily assignment and
+             the live quiz ask for one, because those record a score. -->
         <button class="btn btn-primary btn-block btn-lg" onclick="practiceLogin()">Start Practicing</button>
         <p id="practiceLoginError" style="color:var(--danger); margin-top:10px; display:none;"></p>
       </div>
@@ -228,5 +227,6 @@
   </div>
 
   <script src="js/practice.js"></script>
+  <script src="js/nav.js"></script>
 </body>
 </html>

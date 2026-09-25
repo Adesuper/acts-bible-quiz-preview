@@ -49,7 +49,6 @@ loadPracticeStudents();
 function handlePracticeNameSelect() {
   const val = document.getElementById('practiceNameSelect').value;
   document.getElementById('practiceOtherGroup').style.display = val === 'other' ? 'block' : 'none';
-  document.getElementById('practicePinGroup').style.display = (val && val !== 'other' && registeredKids.includes(val)) ? 'block' : 'none';
   document.getElementById('practiceLoginError').style.display = 'none';
 }
 
@@ -65,19 +64,10 @@ async function practiceLogin() {
     name = selected;
   }
 
-  // Verify PIN for registered kids
-  if (registeredKids.includes(name)) {
-    const pin = document.getElementById('practicePinInput').value.trim();
-    if (!pin) { showPracticeError('Please enter your PIN'); return; }
-    try {
-      const res = await fetch('/api/student/verify', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, pin })
-      });
-      const data = await res.json();
-      if (!data.verified) { showPracticeError('Wrong PIN. Try again!'); return; }
-    } catch (e) { /* server waking up, let them through */ }
-  }
+  // No PIN here. Practice records nothing to the leaderboard, so it is open to
+  // everyone -- a child who forgets a PIN can still revise, and a parent or
+  // visitor can try it. The daily assignment and the live quiz still ask,
+  // because those put a score against a name.
 
   practiceUser = name;
   document.getElementById('practiceLoginSection').classList.add('hidden');
