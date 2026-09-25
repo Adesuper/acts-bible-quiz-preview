@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acts 1–16 Bible Quiz — Adventurer Bible Game 2026–2027</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/questions-data.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <div style="max-width:920px;margin:0 auto 4px;padding:14px 18px;background:hsl(45 95% 55% / .18);border:2px solid hsl(32 85% 52% / .35);border-radius:16px;">
+      <strong style="color:hsl(25 35% 18%);">Preview</strong>
+      <span style="color:hsl(25 15% 45%);">&nbsp;&mdash;&nbsp;this is a static preview of the design and Practice mode, with all 475 Acts questions.
+      The Daily Assignment, the live Saturday quiz, the Bible reader and the teacher dashboard need the game server, so they are not here.</span>
+    </div>
+
+    <!-- HERO SECTION -->
+    <div class="home-hero">
+      <div class="logo-icon">📖</div>
+      <h1>The Book of Acts</h1>
+      <p class="subtitle">Chapters 1&ndash;16 &middot; Adventurer Bible Game 2026&ndash;2027</p>
+      <p class="verse" id="dailyVerse"></p>
+    </div>
+
+    <!-- DAILY ASSIGNMENT BANNER (adapts to whether a season has been scheduled) -->
+    <div class="card daily-banner" id="dailyBanner" style="margin-bottom: 20px; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 8px;" id="bannerIcon">📋</div>
+      <h2 style="color: var(--primary); margin-bottom: 8px;" id="bannerTitle">Start Studying</h2>
+      <p style="color: var(--text-light); margin-bottom: 15px;" id="bannerText">
+        Read a chapter, then practise the questions on it. Go at your own pace.
+      </p>
+      <a href="practice.html" class="btn btn-accent btn-lg" id="bannerBtn">Practise Acts Questions</a>
+    </div>
+
+    <!-- STUDY PLAN -->
+    <div class="card" style="margin-bottom: 20px; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 8px;">&#128220;</div>
+      <h2 style="color: var(--primary); margin-bottom: 8px;">The 74-Day Study Plan</h2>
+      <p style="color: var(--text-light); margin-bottom: 15px;">
+        Every verse of Acts 1&ndash;16, split into 74 short readings over 15 weeks.
+        Print the family packet to study away from a screen.
+      </p>
+      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="btn btn-accent btn-lg">Read Acts 1&ndash;16</a>
+      <a href="acts-family-packet.html" class="btn btn-lg" style="margin-top:10px;display:inline-block;background:#dfe6e9;color:#2d3436;">Printable Family Packet</a>
+    </div>
+
+    <!-- MODE SELECTION -->
+    <div class="mode-cards">
+      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="mode-card">
+        <div class="mode-icon">📋</div>
+        <h2>Daily Assignment</h2>
+        <p>Complete the 10 questions your teacher assigned. Your score is sent to the teacher!</p>
+        <span class="badge badge-daily">Do This Daily!</span>
+      </a>
+
+      <a href="practice.html" class="mode-card">
+        <div class="mode-icon">📝</div>
+        <h2>Free Practice</h2>
+        <p>Study at your own pace. Choose how many questions, pick difficulty, and master every detail!</p>
+        <span class="badge badge-daily">Unlimited</span>
+      </a>
+
+      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="mode-card">
+        <div class="mode-icon">🏆</div>
+        <h2>Live Quiz</h2>
+        <p>Teacher hosts, kids compete in real-time! Same questions, timer, live scoreboard!</p>
+        <span class="badge badge-friday">Multiplayer</span>
+      </a>
+
+      <a href="#" onclick="alert('This part needs the game server and is not in the static preview.');return false;" class="mode-card">
+        <div class="mode-icon">👩‍🏫</div>
+        <h2>Teacher Dashboard</h2>
+        <p>Create assignments, track student scores, and monitor who's preparing for the conference.</p>
+        <span class="badge" style="background: #e8daef; color: #6c3483;">Teachers Only</span>
+      </a>
+    </div>
+
+    <!-- QUICK STATS -->
+    <div class="card" id="quickStatsCard" style="display: none; margin-top: 20px;">
+      <h3 style="text-align: center; margin-bottom: 15px; color: var(--primary);">Your Journey</h3>
+      <div class="stats-grid" id="homeStats"></div>
+    </div>
+
+    <!-- WOMEN OF THE BIBLE -->
+    <div style="margin-top: 30px;">
+      <h2 style="color: white; text-align: center; margin-bottom: 20px; font-size: 1.4rem;">Journey Through Acts</h2>
+      <div class="category-grid" id="categoryGrid"></div>
+    </div>
+
+    <!-- FUN FACT -->
+    <div class="card" style="margin-top: 20px; text-align: center;">
+      <h3 style="color: var(--primary); margin-bottom: 10px;">Did You Know?</h3>
+      <p style="color: var(--text-light); line-height: 1.6;" id="funFact"></p>
+    </div>
+
+    <div style="text-align: center; padding: 30px 0; color: rgba(255,255,255,0.7); font-size: 0.85rem;">
+      Acts 1&ndash;16 &mdash; Adventurer Bible Game 2026&ndash;2027<br>
+      All questions based on the New King James Version (NKJV)
+    </div>
+  </div>
+
+  <script>
+    // Daily verses rotation
+    const verses = [
+      '"She opens her mouth with wisdom, and on her tongue is the law of kindness." — Proverbs 31:26',
+      '"Charm is deceitful and beauty is passing, but a woman who fears the Lord, she shall be praised." — Proverbs 31:30',
+      '"Who can find a virtuous wife? For her worth is far above rubies." — Proverbs 31:10',
+      '"Strength and honor are her clothing; she shall rejoice in time to come." — Proverbs 31:25',
+      '"She watches over the ways of her household, and does not eat the bread of idleness." — Proverbs 31:27',
+      '"For such a time as this." — Esther 4:14',
+      '"Wherever you go, I will go; wherever you lodge, I will lodge." — Ruth 1:16',
+      '"My soul magnifies the Lord, and my spirit has rejoiced in God my Savior." — Luke 1:46-47',
+      '"My heart rejoices in the Lord; my horn is exalted in the Lord." — 1 Samuel 2:1'
+    ];
+    const dayIndex = Math.floor(Date.now() / 86400000) % verses.length;
+    document.getElementById('dailyVerse').textContent = verses[dayIndex];
+
+    // Fun facts
+    const facts = [
+      'The book of Esther is one of only two books in the Bible named after a woman (Ruth is the other)!',
+      'Ruth was a Moabite — a foreigner — yet she became the great-grandmother of King David and an ancestor of Jesus!',
+      'Hannah\'s prayer in 1 Samuel 2 is so similar to Mary\'s Magnificat in Luke 1 that scholars believe Mary was inspired by Hannah!',
+      'Deborah is the only woman in the Bible who served as both a judge AND a prophetess of Israel!',
+      'Abigail is one of only a few women in the Bible described as both wise AND beautiful!',
+      'Elizabeth and Mary were relatives, and their miraculous pregnancies overlapped by about 3 months!',
+      'The name "Esther" may come from the Persian word for "star," while her Hebrew name Hadassah means "myrtle tree."',
+      'The festival of Purim, celebrated to this day, comes from the story of Esther — "Pur" means "lot" in Persian.',
+      'Jael used a tent peg to defeat Sisera — as a nomadic woman, she was expert at driving tent pegs!',
+      'Obed, Ruth\'s son, means "servant" — and his grandson David became the greatest king of Israel!'
+    ];
+    const factIndex = Math.floor(Date.now() / 86400000) % facts.length;
+    document.getElementById('funFact').textContent = facts[factIndex];
+
+    // Load categories from embedded data (works on GitHub Pages — no server needed)
+    // If the coach has scheduled the season, show today's assignment.
+    // If nothing is scheduled yet, point at self-paced practice instead, so the
+    // page never promises an assignment that isn't there.
+    fetch('/api/daily/available')
+      .then(function (r) { return r.json(); })
+      .then(function (list) {
+        var acts = (list || []).filter(function (a) {
+          return a.kind === 'study' || a.kind === 'weekly' || a.kind === 'revision';
+        });
+        if (!acts.length) return;                    // keep the practice wording
+        var next = acts[0];
+        document.getElementById('bannerTitle').textContent = "Today's Assignment";
+        document.getElementById('bannerText').textContent =
+          next.label + ' — ' + next.questionCount + ' questions.';
+        var btn = document.getElementById('bannerBtn');
+        btn.textContent = 'Start Daily Assignment';
+        btn.setAttribute('href', 'daily.html');
+      })
+      .catch(function () { /* offline: the practice wording still makes sense */ });
+
+    // This season is Acts 1-16. The bank holds only Acts now -- last season's
+    // Women of the Bible questions were moved to archive/ so the two cannot
+    // mix -- but the filter is kept so a future season can be added without
+    // the home grid silently showing both at once.
+    const categories = QUIZ_CATEGORIES
+      .filter(cat => cat.id.startsWith('acts'))
+      .map(cat => {
+        const count = QUIZ_QUESTIONS.filter(q => q.category === cat.id).length;
+        return { ...cat, questionCount: count };
+      });
+    const grid = document.getElementById('categoryGrid');
+    categories.forEach(cat => {
+      const card = document.createElement('a');
+      card.href = `practice.html?category=${cat.id}`;
+      card.className = 'category-card';
+      card.style.borderColor = cat.color;
+      card.innerHTML = `
+        <div class="cat-icon">${cat.icon}</div>
+        <h3>${cat.name} <span style="font-size:0.75rem;color:var(--text-light);">(${cat.questionCount})</span></h3>
+        <div class="cat-ref">${cat.reference}</div>
+        <div class="cat-desc">${cat.description}</div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // Show progress stats if available
+    try {
+      const progress = JSON.parse(localStorage.getItem('bible_quiz_progress') || '{}');
+      if (progress.totalAnswered && progress.totalAnswered > 0) {
+        document.getElementById('quickStatsCard').style.display = 'block';
+        const accuracy = Math.round((progress.totalCorrect / progress.totalAnswered) * 100);
+        const seen = progress.seen ? Object.keys(progress.seen).length : 0;
+        const mastered = progress.seen
+          ? Object.values(progress.seen).filter(s => s.correct >= 2).length
+          : 0;
+
+        document.getElementById('homeStats').innerHTML = `
+          <div class="stat-item">
+            <div class="stat-value">${progress.totalSessions || 0}</div>
+            <div class="stat-label">Sessions</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">${accuracy}%</div>
+            <div class="stat-label">Accuracy</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">${seen}</div>
+            <div class="stat-label">Questions Seen</div>
+          </div>
+        `;
+      }
+    } catch (e) {}
+  </script>
+</body>
+</html>
