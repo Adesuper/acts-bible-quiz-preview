@@ -12,7 +12,6 @@
     { href: 'index.html',       label: 'Home',        icon: '\u{1F3E0}' },
     { href: 'read.html',        label: 'Read Acts',   icon: '\u{1F4D6}' },
     { href: 'practice.html',    label: 'Practice',    icon: '\u{1F3AE}' },
-    { href: 'team-play.html',   label: 'Live Quiz',   icon: '\u{1F3C6}' },
     { href: 'leaderboard.html', label: 'Leaderboard', icon: '\u2B50' }
   ];
 
