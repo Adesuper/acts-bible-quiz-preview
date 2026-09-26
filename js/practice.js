@@ -19,63 +19,13 @@ let missedQuestions = [];
 let newQuestionsThisRound = 0;
 let isDailyChallenge = false;
 
-// ============ LOGIN ============
-// The roster. Kept in step with the server by loadPracticeStudents(); this
-// list is only the fallback if /api/students cannot be reached. It decides who
-// is asked for a PIN, so it has to match the real roster.
-let registeredKids = ['Amayah', 'Glenda', 'Erlyssa', 'Ronald', 'Renora', 'Karter', 'Israel'];
-
-async function loadPracticeStudents() {
-  try {
-    const res = await fetch('/api/students');
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data.students) && data.students.length) registeredKids = data.students;
-    }
-  } catch (e) {
-    // Offline or served as a static file - fall back to the list above.
-  }
-  const sel = document.getElementById('practiceNameSelect');
-  if (!sel) return;
-  const chosen = sel.value;
-  sel.innerHTML = '<option value="">-- Choose your name --</option>'
-    + registeredKids.map(n => `<option value="${n}">${n}</option>`).join('')
-    + '<option value="other">Someone else</option>';
-  if (chosen) sel.value = chosen;
-}
-
-loadPracticeStudents();
-
-function handlePracticeNameSelect() {
-  const val = document.getElementById('practiceNameSelect').value;
-  document.getElementById('practiceOtherGroup').style.display = val === 'other' ? 'block' : 'none';
-  document.getElementById('practiceLoginError').style.display = 'none';
-}
-
-async function practiceLogin() {
-  const selected = document.getElementById('practiceNameSelect').value;
-  if (!selected) { showPracticeError('Please select your name!'); return; }
-
-  let name = '';
-  if (selected === 'other') {
-    name = document.getElementById('practiceOtherInput').value.trim();
-    if (!name || name.length < 2) { showPracticeError('Please type your name'); return; }
-  } else {
-    name = selected;
-  }
-
-  // No PIN here. Practice records nothing to the leaderboard, so it is open to
-  // everyone -- a child who forgets a PIN can still revise, and a parent or
-  // visitor can try it. The daily assignment and the live quiz still ask,
-  // because those put a score against a name.
-
-  practiceUser = name;
-  document.getElementById('practiceLoginSection').classList.add('hidden');
-  document.getElementById('categorySection').classList.remove('hidden');
-  renderProgressCard();
-  renderDailyChallenge();
-  renderCategories();
-}
+// ============ NO LOGIN ============
+// Practice is open: it writes nothing to the leaderboard, so there is nothing
+// to protect and no reason to ask who is practising. Progress is kept in this
+// browser only. The daily assignment and the live quiz still ask for a name
+// and PIN, because those record a score against a child.
+// practiceUser stays declared at the top of this file, now always '' -- the
+// storage key falls back to 'guest', so progress is per browser.
 
 function showPracticeError(msg) {
   document.getElementById('practiceLoginError').textContent = msg;
@@ -313,7 +263,7 @@ function startMixedQuiz() {
   currentCategory = 'mix';
   isDailyChallenge = false;
   document.getElementById('selectedCategoryTitle').textContent = 'Mixed Questions';
-  document.getElementById('selectedCategoryRef').textContent = 'Questions from all women of the Bible!';
+  document.getElementById('selectedCategoryRef').textContent = 'Questions from all 16 chapters of Acts!';
   fetchAvailableCount();
   showSection('settingsSection');
 }

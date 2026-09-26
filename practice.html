@@ -11,40 +11,15 @@
   <div class="container">
     <a href="index.html" class="back-link">&larr; Back to Home</a>
 
-    <!-- NAME LOGIN -->
-    <div id="practiceLoginSection">
-      <div class="page-header">
-        <h1>Free Practice</h1>
-        <p>Select your name to track your personal progress</p>
-      </div>
-      <div class="card name-input-card" style="max-width:450px; margin:0 auto; text-align:center;">
-        <div style="font-size:3rem; margin-bottom:15px;">📝</div>
-        <h3 style="margin-bottom:6px;">Who are you?</h3>
-        <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:18px;">Practice is open to everyone — no PIN needed.</p>
-        <div class="form-group">
-          <select id="practiceNameSelect" style="width:100%; padding:14px; border:2px solid #e0e0e0; border-radius:12px; font-size:1.1rem; text-align:center;" onchange="handlePracticeNameSelect()">
-            <!-- Names are filled in from /api/students on load, so the roster
-                 is only ever edited in one place. These are the fallback for
-                 when the server cannot be reached. -->
-            <option value="">-- Choose your name --</option>
-            <option value="other">Someone else</option>
-          </select>
-        </div>
-        <div class="form-group" id="practiceOtherGroup" style="display:none;">
-          <input type="text" id="practiceOtherInput" placeholder="Type your name..." maxlength="30" style="text-align:center; font-size:1.1rem; width:100%; padding:14px; border:2px solid #e0e0e0; border-radius:12px;">
-        </div>
-        <!-- Practice is open to everyone: no PIN. Only the daily assignment and
-             the live quiz ask for one, because those record a score. -->
-        <button class="btn btn-primary btn-block btn-lg" onclick="practiceLogin()">Start Practicing</button>
-        <p id="practiceLoginError" style="color:var(--danger); margin-top:10px; display:none;"></p>
-      </div>
-    </div>
+    <!-- No sign-in step. Practice records nothing to the leaderboard, so it
+         opens straight onto the chapters. Only the daily assignment and the
+         live quiz ask who you are, because those put a score against a name. -->
 
     <!-- CATEGORY SELECTION -->
-    <div id="categorySection" class="hidden">
+    <div id="categorySection">
       <div class="page-header">
-        <h1>Daily Practice</h1>
-        <p>Pick a woman of the Bible to study, or mix them all up!</p>
+        <h1>Practice</h1>
+        <p>Pick a chapter of Acts to study, or mix them all up!</p>
       </div>
 
       <!-- Daily Challenge Banner -->
@@ -70,11 +45,11 @@
 
       <div style="text-align: center; margin: 20px 0;">
         <button class="btn btn-accent btn-lg" onclick="startMixedQuiz()">
-          Mix All Women (Random)
+          Mix All Chapters (Random)
         </button>
       </div>
 
-      <h3 style="color: white; text-align: center; margin: 20px 0 15px;">Choose a Woman to Study</h3>
+      <h3 class="section-title" style="text-align:center; margin:24px 0 14px;">Choose a Chapter to Study</h3>
       <div class="category-grid" id="categoryGrid"></div>
     </div>
 
